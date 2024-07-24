@@ -37,7 +37,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("register")
-    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public BaseResponse<String> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
 
         if (userRegisterRequest == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
@@ -56,9 +56,9 @@ public class UserController {
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
 
-        Long id = userService.userRegister(userAccount, userPassword, checkPassword,planetCode);
+        String unique = userService.userRegister(userAccount, userPassword, checkPassword,planetCode);
 
-        return ResultUtils.success(id);
+        return ResultUtils.success(unique);
     }
 
 

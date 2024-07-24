@@ -20,6 +20,7 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
 
     @Override
-    public Long userRegister(String userAccount, String userPassword, String checkPassword, Long planetCode) {
+    public String userRegister(String userAccount, String userPassword, String checkPassword, Long planetCode) {
 
         //校验
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
@@ -103,20 +104,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT +
                 userPassword).getBytes(StandardCharsets.UTF_8));
 
+        //获取唯一id
+        String uniqueId = planetCode + String.valueOf(UUID.randomUUID());
 
         // 3. 向数据库插入用户数据
         User user = new User();
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptPassword);
         user.setPlanetCode(planetCode);
+        user.setUniqueId(uniqueId);
         boolean saveResult = this.save(user);
 
         if (!saveResult) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,"系统异常");
         }
 
-
-        return user.getId();
+        return uniqueId;
     }
 
     @Override
@@ -189,6 +192,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setCreateTime(originUser.getCreateTime());
         safetyUser.setUpdateTime(originUser.getUpdateTime());
         safetyUser.setPlanetCode(originUser.getPlanetCode());
+        safetyUser.setUniqueId(originUser.getUniqueId());
 
         return safetyUser;
     }

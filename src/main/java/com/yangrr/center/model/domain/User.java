@@ -86,6 +86,10 @@ public class User implements Serializable {
      */
     private Long planetCode;
 
+
+    //唯一id
+    private String uniqueId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

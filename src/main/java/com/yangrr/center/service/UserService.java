@@ -23,7 +23,7 @@ public interface UserService extends IService<User> {
      * @param planetCode
      * @return 影响行数
      */
-    Long userRegister(String userAccount, String userPassword, String checkPassword, Long planetCode);
+    String userRegister(String userAccount, String userPassword, String checkPassword, Long planetCode);
 
 
     /**
