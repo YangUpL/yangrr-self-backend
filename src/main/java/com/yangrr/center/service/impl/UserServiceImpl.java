@@ -201,6 +201,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public void userLogout(HttpServletRequest request) {
         request.getSession().removeAttribute(USER_LOGIN_STATE);
     }
+
+    @Override
+    public void updateUser(UpdateRequest updateRequest) {
+        userMapper.updateById(updateRequest);
+    }
 }
 
 

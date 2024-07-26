@@ -24,11 +24,6 @@ public class UpdateRequest {
     private String username;
 
     /**
-     * 账号
-     */
-    private String userAccount;
-
-    /**
      * 用户头像
      */
     private String avatarUrl;
@@ -48,20 +43,4 @@ public class UpdateRequest {
      */
     private String email;
 
-    /**
-     * 状态 0 - 正常
-     */
-    private Integer userStatus;
-
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-
-    /**
-     * 用户权限 0- 普通用户 1 - 管理员
-     */
-    private Integer userRole;
 }

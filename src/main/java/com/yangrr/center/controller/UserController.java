@@ -101,6 +101,20 @@ public class UserController {
         return ResultUtils.success(safetyUser);
     }
 
+    @PostMapping("update")
+    public BaseResponse<Integer> updateUser(@RequestBody UpdateRequest updateRequest){
+
+        if (updateRequest == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+
+        Long id = updateRequest.getId();
+
+        userService.updateUser(updateRequest);
+
+        return ResultUtils.success(1);
+    }
+
     @PostMapping("logout")
     private void logout(HttpServletRequest request){
         userService.userLogout(request);
