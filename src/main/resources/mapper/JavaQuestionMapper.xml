@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangrr.center.mapper.JavaQuestionMapper">
+
+    <resultMap id="BaseResultMap" type="com.yangrr.center.model.domain.JavaQuestion">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="question" column="question" jdbcType="VARCHAR"/>
+            <result property="classification" column="classification" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,question,classification
+    </sql>
+
+
+
+    <select id="javaQuestion" resultType="com.yangrr.center.model.domain.JavaQuestion">
+        SELECT * FROM java_question
+        <where>
+            <!-- 如果 queName 不为 null，则拼接条件 -->
+            <if test="queName!= null">
+                AND question LIKE CONCAT('%', #{queName}, '%')
+            </if>
+            <!-- 如果 classification 不为 -1，则拼接条件 -->
+            <if test="classification!= -1">
+                AND classification = #{classification}
+            </if>
+        </where>
+        LIMIT #{current}, #{size}
+    </select>
+
+
+</mapper>
